@@ -1,0 +1,93 @@
+components:
+  schemas:
+    PriceValue:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+    ActiveDates:
+      type: object
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+    Price:
+      type: object
+      properties:
+        priceId:
+          type: number
+        productId:
+          type: number
+        brandId:
+          type: number
+        priceValue:
+          $ref: '#/components/schemas/PriceValue'
+        activeDates:
+          $ref: '#/components/schemas/ActiveDates'
+    PriceNotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+    PriceRequest:
+      type: object
+      properties:
+        productId:
+          type: number
+        date:
+          type: number
+
+openapi: 3.0.3
+info:
+  title: Inditex Prices Application
+  description: |-
+    Sample Application for testing purposes
+  version: 1.0-SNAPSHOT
+servers:
+  - url: https://localhost:8080/api/v1
+tags:
+  - name: prices
+    description: operations for prices
+paths:
+  /price/{brandId}:
+    get:
+      tags:
+        - prices
+      summary: Get price for a given product on a given date
+      description: Get price for a given product on a given date
+      operationId: getPrice
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          schema:
+            type: integer
+          description: Brand Identifier
+        - in: query
+          name: productId
+          required: true
+          schema:
+            type: integer
+          description: Product Identifier
+        - in: query
+          name: date
+          required: true
+          schema:
+            type: string
+          description: Date of price application in format (YYYY-MM-DD hh:mm:ss)
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        404:
+          description: Price not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceNotFoundError'
