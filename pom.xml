@@ -30,6 +30,15 @@
 		<java.version>17</java.version>
 		<generated.targetdir>${project.basedir}/generated-sources</generated.targetdir>
 	</properties>
+<!--	<dependencyManagement>-->
+<!--		<dependencies>-->
+<!--			<dependency>-->
+<!--				<groupId>org.codehaus.groovy</groupId>-->
+<!--				<artifactId>groovy-xml</artifactId>-->
+<!--				<version>3.0.2</version> &lt;!&ndash; Use the version required by RestAssureds &ndash;&gt;-->
+<!--			</dependency>-->
+<!--		</dependencies>-->
+<!--	</dependencyManagement>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -130,10 +139,38 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>1.5.5.Final</version>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>5.5.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.groovy</groupId>
+					<artifactId>groovy-xml</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>5.5.0</version>
+			<scope>test</scope>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>io.rest-assured</groupId>-->
+<!--			<artifactId>xml-path</artifactId>-->
+<!--			<version>4.3.0</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.codehaus.groovy</groupId>-->
+<!--					<artifactId>groovy-xml</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+
 
 	</dependencies>
 
@@ -195,11 +232,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				<directory>${generated.targetdir}</directory>-->
-<!--			</resource>-->
-<!--		</resources>-->
 		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
 
 	</build>
