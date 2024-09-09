@@ -3,11 +3,13 @@ package dev.dit.mauro.gft.api;
 import dev.dit.mauro.gft.exception.InvalidPriceException;
 import dev.dit.mauro.gft.service.PriceService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.openapitools.model.Price;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,7 @@ import static dev.dit.mauro.gft.utils.TestDataHelper.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SpringExtension.class)
 class PriceApiControllerTest {
 
 	@Mock
