@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,9 +24,9 @@ public class PriceEntity implements Serializable {
 
 	private Integer brandId;
 
-	private LocalDate startDate;
+	private LocalDateTime startDate;
 
-	private LocalDate endDate;
+	private LocalDateTime endDate;
 
 	private Integer productId;
 

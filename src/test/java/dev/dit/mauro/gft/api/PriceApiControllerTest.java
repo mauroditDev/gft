@@ -9,7 +9,8 @@ import org.openapitools.model.Price;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static dev.dit.mauro.gft.utils.TestDataHelper.*;
@@ -26,7 +27,7 @@ class PriceApiControllerTest {
 
 	@Test
 	void givenValidDataWhenCallingGetPriceThenShouldReturnAValidPrice() throws InvalidPriceException {
-		LocalDate localDate = BASIC_REQUEST_DATE;
+		LocalDateTime localDate = BASIC_REQUEST_DATE;
 
 		when(priceService.getPriceByBrandProductAndDate(BRAND_ID, PRODUCT_ID, localDate)).thenReturn(Optional.of(buildPriceEntity()));
 		Price price = priceApiController.getPrice(BRAND_ID, PRODUCT_ID, REQUEST_DATE_STRING).getBody();
@@ -34,8 +35,12 @@ class PriceApiControllerTest {
 		assertEquals(PRICE_ID, price.getPriceId().intValue());
 		assertEquals(PRICE_AMOUNT, price.getPriceValue().getAmount().doubleValue());
 		assertEquals(PRICE_CURR, price.getPriceValue().getCurrency());
-		assertTrue(localDate.isBefore(LocalDate.parse(price.getActiveDates().getEndDate())));
-		assertTrue(localDate.isAfter(LocalDate.parse(price.getActiveDates().getStartDate())));
+		final LocalDateTime parsedEndDate =
+				LocalDateTime.parse(price.getActiveDates().getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		assertTrue(localDate.isBefore(parsedEndDate));
+		final LocalDateTime parsedStartDate =
+				LocalDateTime.parse(price.getActiveDates().getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		assertTrue(localDate.isAfter(parsedStartDate));
 
 	}
 

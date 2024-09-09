@@ -1,6 +1,7 @@
 package dev.dit.mauro.gft.mapper;
 
 import dev.dit.mauro.gft.data.entity.PriceEntity;
+import dev.dit.mauro.gft.exception.InvalidPriceException;
 import dev.dit.mauro.gft.utils.TestDataHelper;
 import org.junit.jupiter.api.Test;
 import org.openapitools.model.Price;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PriceMapperTest {
 
 	@Test
-	public void givenValidPriceEntityWhenEntityToModelIsCalledThenAnEquivalentModelShouldBeReturned() {
+	public void givenValidPriceEntityWhenEntityToModelIsCalledThenAnEquivalentModelShouldBeReturned() throws InvalidPriceException {
 		final PriceEntity originalPriceEntity = TestDataHelper.buildPriceEntity();
 		final Price convertedPrice = PriceMapper.entityToModel(originalPriceEntity);
 
@@ -25,7 +26,7 @@ class PriceMapperTest {
 	}
 
 	@Test
-	public void givenNullPriceEntityWhenEntityToModelIsCalledThenNullValueShouldBeReturned() {
+	public void givenNullPriceEntityWhenEntityToModelIsCalledThenNullValueShouldBeReturned() throws InvalidPriceException {
 		final Price convertedPrice = PriceMapper.entityToModel(null);
 
 		assertNull(convertedPrice);
@@ -37,7 +38,7 @@ class PriceMapperTest {
 		originalPriceEntity.setPriceId(null);
 
 		final Exception exception = assertThrows(Exception.class, ()->PriceMapper.entityToModel(originalPriceEntity));
-		assertTrue(exception.getMessage().contains("invalid PriceEntity"));
+		assertEquals(InvalidPriceException.class, exception.getClass());
 	}
 
 }

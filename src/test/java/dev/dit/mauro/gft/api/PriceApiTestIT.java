@@ -9,7 +9,8 @@ import org.openapitools.model.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static dev.dit.mauro.gft.utils.TestDataHelper.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,8 +34,8 @@ class PriceApiTestIT {
 		assertEquals(priceEntity.getPriceId(), price.getPriceId().intValue());
 		assertEquals(priceEntity.getPrice(), price.getPriceValue().getAmount().doubleValue());
 		assertEquals(priceEntity.getCurr(), price.getPriceValue().getCurrency());
-		assertTrue(priceEntity.getStartDate().isBefore(LocalDate.parse(price.getActiveDates().getEndDate())));
-		assertTrue(priceEntity.getEndDate().isAfter(LocalDate.parse(price.getActiveDates().getStartDate())));
+		assertTrue(priceEntity.getStartDate().isBefore(LocalDateTime.parse(price.getActiveDates().getEndDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
+		assertTrue(priceEntity.getEndDate().isAfter(LocalDateTime.parse(price.getActiveDates().getStartDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
 	}
 
 }
