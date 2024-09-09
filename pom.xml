@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<generated.targetdir>${project.basedir}/generated-sources</generated.targetdir>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -128,6 +129,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.5.5.Final</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -156,9 +163,7 @@
 						</goals>
 						<configuration>
 							<inputSpec>./src/main/resources/prices_api_description.yaml</inputSpec>
-							<output>${project.build.directory}/generated-sources/openapi</output>
-							<apiPackage>dev.dit.mauro.gft.api</apiPackage>
-							<modelPackage>dev.dit.mauro.gft.model</modelPackage>
+							<output>${generated.targetdir}</output>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<generateModels>true</generateModels>
@@ -183,13 +188,20 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.build.directory}/generated-sources/openapi</source>
+								<source>${generated.targetdir}</source>
 							</sources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
+<!--		<resources>-->
+<!--			<resource>-->
+<!--				<directory>${generated.targetdir}</directory>-->
+<!--			</resource>-->
+<!--		</resources>-->
+		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+
 	</build>
 	<repositories>
 		<repository>

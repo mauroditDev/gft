@@ -1,6 +1,7 @@
 package dev.dit.mauro.gft.api;
 
-import dev.dit.mauro.gft.model.Price;
+import org.openapitools.model.Price;
+import org.openapitools.api.PriceApi;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
