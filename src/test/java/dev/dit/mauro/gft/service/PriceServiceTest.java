@@ -5,8 +5,10 @@ import dev.dit.mauro.gft.data.repository.PriceRepository;
 
 import dev.dit.mauro.gft.exception.InvalidPriceException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SpringExtension.class)
 class PriceServiceTest {
 
 	private static final int VALID_PID = 999;
@@ -34,7 +37,7 @@ class PriceServiceTest {
 	private PriceRepository priceRepository;
 
 	@InjectMocks
-	private PriceService priceService;
+	private PriceServiceImpl priceService;
 
 	@Test
 	public void givenValidDataWhenFindingPricesThenReturnCorrectPriceFromDb() throws Exception {
@@ -77,7 +80,7 @@ class PriceServiceTest {
 				OUTDATED_PID,
 				BRAND_ID,
 				BASIC_START_DATE,
-				BASIC_REQUEST_DATE.minusDays(LOW_PRIORITY),
+				BASIC_REQUEST_DATE.minusDays(5),
 				PRODUCT_ID,
 				HIGH_PRIORITY,
 				PRICE_AMOUNT,
@@ -96,7 +99,7 @@ class PriceServiceTest {
 		final PriceEntity futurePrice = buildPriceEntity(
 				FUTURE_PID,
 				BRAND_ID,
-				BASIC_START_DATE,
+				BASIC_REQUEST_DATE.plusDays(5),
 				BASIC_END_DATE,
 				PRODUCT_ID,
 				HIGH_PRIORITY,
